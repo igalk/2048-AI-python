@@ -1,7 +1,7 @@
 from math import *
 from random import choice, random
 
-from problem import ProblemState, ProblemAction
+from problem import ProblemState
 
 
 BOARD_SIZE = 4  # cells
@@ -180,42 +180,6 @@ class NumbersState(ProblemState):
         for i in range(2):
             state = state.mutate()
         return state
-
-
-class MoveAction(ProblemAction):
-    """
-    Describes the move in a given direction.
-    """
-
-    def __init__(self, direction):
-        """
-        Creates a new MoveAction.
-        @param direction: A direction to move in.
-        """
-        ProblemAction.__init__(self)
-        self.direction = direction
-
-    def __cmp__(self, other):
-        """
-        The comparison method must be implemented to ensure deterministic results.
-        @return: Negative if self < other, zero if self == other and strictly
-        positive if self > other.
-        """
-        return cmp(self.direction, other.direction)
-
-    def __hash__(self):
-        """
-        The hash method must be implemented for actions to be inserted into sets
-        and dictionaries.
-        @return: The hash value of the action.
-        """
-        return hash(self.direction)
-
-    def __str__(self):
-        """
-        @return: The string representation of this object when *str* is called.
-        """
-        return str(self.direction)
 
 
 class Direction():
