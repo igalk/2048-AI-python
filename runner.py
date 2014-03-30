@@ -39,7 +39,7 @@ print problem
 
 agent = TestAgent()
 
-while not problem.is_goal():
+while not problem.is_goal() and problem.get_successors():
     solution = agent.solve(problem, 0)
     print solution
     problem = problem.get_successors()[solution]

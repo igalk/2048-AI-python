@@ -82,7 +82,7 @@ class BestFirstGraphSearch(SearchAlgorithm):
         moves = 0
         while (time.time() - start) < self.time_limit:
             # Find the current best state
-            best_index, best_state = max(enumerate(states), key=lambda state: state[1]  .score)
+            best_index, best_state = max(enumerate(states), key=lambda state: state[1].score)
 
             # Replace the best state with all its children
             states.pop(best_index)
