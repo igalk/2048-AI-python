@@ -6,7 +6,7 @@ from search.best_first import BestFirstGraphSearch
 
 class TestAgent(ProblemAgent):
     def solve(self, problem_state, time_limit=NO_LIMIT):
-        return BestFirstGraphSearch(1).find(problem_state, TestHeuristic())
+        return BestFirstGraphSearch(5).find(problem_state, TestHeuristic())
 
 
 class TestHeuristic(Heuristic):

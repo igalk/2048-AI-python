@@ -158,13 +158,22 @@ class NumbersState(ProblemState):
         """
         @return: Whether a 2048 cell exists.
         """
-        # return len([n for n in sum(self.board) if n == GOAL]
         b = self.board
         while b > 0:
             if b & GOAL:
                 return True
             b = (b >> CELL_SIZE)
         return False
+
+    def score(self):
+        sum = 0
+        for y in range(BOARD_SIZE):
+            for x in range(BOARD_SIZE):
+                cell = self.cell_at((y, x))
+                if cell:
+                    sum += (math.log(cell, 2)-1)*cell
+        return sum
+
 
     @staticmethod
     def from_table(table):
