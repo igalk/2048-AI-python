@@ -1,12 +1,5 @@
-from heuristic.basic import BasicHeuristic
+from basic_agent import BasicAgent
 from numbers_problem import *
-from problem_agent import ProblemAgent, NO_LIMIT
-from search.best_first import BestFirstGraphSearch
-import profile
-
-class TestAgent(ProblemAgent):
-    def solve(self, problem_state, time_limit=NO_LIMIT):
-        return BestFirstGraphSearch(5).find(problem_state, BasicHeuristic())
 
 
 def print_solution(problem, solution):
@@ -28,11 +21,11 @@ def main():
              [16, 2, 128, 4]])
     print problem
 
-    agent = TestAgent()
+    agent = BasicAgent()
 
     # number_of_moves = 5
     while not problem.is_goal() and problem.get_successors():
-        solution = agent.solve(problem, 0)
+        solution = agent.solve(problem, 5)
         print solution
         problem = problem.get_successors()[solution]
         print problem
