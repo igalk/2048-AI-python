@@ -1,4 +1,4 @@
-from math import *
+import math
 from random import choice, random
 
 from problem import ProblemState
@@ -57,7 +57,7 @@ class NumbersState(ProblemState):
         for y in range(BOARD_SIZE):
             s += '|'
             for x in range(BOARD_SIZE):
-                print_format = "%%%dd|" % round(log(GOAL, 10) + 0.5)
+                print_format = "%%%dd|" % round(math.log(GOAL, 10) + 0.5)
                 s += print_format % (b & ALL_ONES)
                 b = (b >> CELL_SIZE)
             s += '\n'
@@ -76,24 +76,24 @@ class NumbersState(ProblemState):
             new_state = NumbersState(self.board)
             merged = []
             if direction == RIGHT:
-                for row in range(BOARD_SIZE):
-                    for i in range(BOARD_SIZE - 2, -1, -1):
-                        for col in range(i, BOARD_SIZE - 1, 1):
+                for row in xrange(BOARD_SIZE):
+                    for i in xrange(BOARD_SIZE - 2, -1, -1):
+                        for col in xrange(i, BOARD_SIZE - 1, 1):
                             self._moveCell(row, col, direction, new_state, merged)
             elif direction == LEFT:
-                for row in range(BOARD_SIZE):
-                    for i in range(1, BOARD_SIZE, 1):
-                        for col in range(i, 0, -1):
+                for row in xrange(BOARD_SIZE):
+                    for i in xrange(1, BOARD_SIZE, 1):
+                        for col in xrange(i, 0, -1):
                             self._moveCell(row, col, direction, new_state, merged)
             elif direction == UP:
-                for col in range(BOARD_SIZE):
-                    for i in range(1, BOARD_SIZE, 1):
-                        for row in range(i, 0, -1):
+                for col in xrange(BOARD_SIZE):
+                    for i in xrange(1, BOARD_SIZE, 1):
+                        for row in xrange(i, 0, -1):
                             self._moveCell(row, col, direction, new_state, merged)
             elif direction == DOWN:
-                for col in range(BOARD_SIZE):
-                    for i in range(BOARD_SIZE - 2, -1, -1):
-                        for row in range(i, BOARD_SIZE - 1, 1):
+                for col in xrange(BOARD_SIZE):
+                    for i in xrange(BOARD_SIZE - 2, -1, -1):
+                        for row in xrange(i, BOARD_SIZE - 1, 1):
                             self._moveCell(row, col, direction, new_state, merged)
             if new_state != self:
                 successors[direction] = new_state
