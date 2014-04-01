@@ -3,16 +3,6 @@ from heuristic.basic2 import BasicHeuristic2
 from numbers_problem2 import NumbersState2
 
 
-def print_solution(problem, solution):
-    print problem
-    current = problem
-    for action in solution:
-        current = current.get_successors()[action]
-        print current
-    print 'Solution:', solution
-    print 'Solution length:', len(solution)
-
-
 def main():
     problem = NumbersState2.random_start()
     print problem
