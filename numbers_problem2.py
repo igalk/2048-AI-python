@@ -167,7 +167,7 @@ class NumbersState2(ProblemState):
         # Progress towards the vector direction until an obstacle is found
         previous = cell
         cell = Index(previous.y + direction.dy, previous.x + direction.dx)
-        while cell.within_bounds() and self.cell_at((cell.y, cell.x)) is None:
+        while cell.within_bounds() and self.cell_at(cell) is None:
             previous = cell
             cell = Index(previous.y + direction.dy, previous.x + direction.dx)
 
