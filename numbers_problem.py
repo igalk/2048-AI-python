@@ -116,11 +116,10 @@ class NumbersState(ProblemState):
     def mutate(self):
         empty = self.get_empty_cells()
         cell = choice(empty)
+        value = 2 if random() < 0.9 else 4
+
         new_state = NumbersState(self.board)
-        if random() < 0.9:
-            new_state.set_cell(cell, 2)
-        else:
-            new_state.set_cell(cell, 4)
+        new_state.set_cell(cell, value)
         return new_state
 
     def get_empty_cells(self):

@@ -6,7 +6,7 @@ class BasicHeuristic(Heuristic):
         score = 0
         for x in xrange(4):
             for y in xrange(4):
-                cell = state.cell_at((x, y))
+                cell = state.cell_at((y, x))
                 if cell > 0:
                     score += (cell / 2 - 1)
                 else:
