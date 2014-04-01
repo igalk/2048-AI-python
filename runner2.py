@@ -1,5 +1,5 @@
 from basic_agent import BasicAgent
-from heuristic.basic import BasicHeuristic
+from heuristic.basic2 import BasicHeuristic2
 from numbers_problem2 import NumbersState2
 
 
@@ -17,7 +17,7 @@ def main():
     problem = NumbersState2.random_start()
     print problem
 
-    agent = BasicAgent(BasicHeuristic())
+    agent = BasicAgent(BasicHeuristic2())
 
     # number_of_moves = 5
     while problem.get_successors():

@@ -236,6 +236,19 @@ class NumbersState2Test(unittest.TestCase):
 
         self.assertFalse(DOWN in state.get_successors())
 
+    def test_empty_cells(self):
+        state = NumbersState2.from_table(
+            [[0, 0, 0, 2],
+             [0, 0, 0, 4],
+             [0, 0, 0, 8],
+             [0, 0, 0, 16]])
+
+        cells = state.available_cells()
+        self.assertEqual(12, len(cells))
+        for cell in cells:
+            self.assertTrue(0 <= cell.x < 3)
+            self.assertTrue(0 <= cell.y < 4)
+
 
 if __name__ == "__main__":
     unittest.main()

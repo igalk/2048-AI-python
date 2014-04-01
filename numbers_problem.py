@@ -103,14 +103,14 @@ class NumbersState(ProblemState):
 
     def get_mutations(self):
         empty = self.get_empty_cells()
-        mutations = {}
+        mutations = []
         for p in empty:
             new_state = NumbersState(self.board)
             new_state.set_cell(p, 2)
-            mutations[new_state] = (0.9 / len(empty))
+            mutations.append((new_state, 0.9 / len(empty)))
             new_state = NumbersState(self.board)
             new_state.set_cell(p, 4)
-            mutations[new_state] = (0.1 / len(empty))
+            mutations.append((new_state, 0.1 / len(empty)))
         return mutations
 
     def mutate(self):

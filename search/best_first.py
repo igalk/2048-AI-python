@@ -24,7 +24,7 @@ class State:
     def search(self, heuristic):
         mutations = self.state.get_mutations()
         states = []
-        for mutation, chance in mutations.iteritems():
+        for mutation, chance in mutations:
             best = {'score': -1, 'successor': None, 'chance': 0}
             successors = mutation.get_successors()
             for successor in successors.itervalues():

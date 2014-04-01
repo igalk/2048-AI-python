@@ -26,11 +26,7 @@ class Tile(Index):
     def __init__(self, y, x, value):
         Index.__init__(self, y, x)
         self.value = value or 2
-        self.previous_position = None
         self.merged_from = None
-
-    def save_position(self):
-        self.previous_position = Index(self.y, self.x)
 
     def update_position(self, position):
         self.x = position.x
@@ -54,19 +50,11 @@ class NumbersState2(ProblemState):
 
     def available_cells(self):
         cells = []
-
-        def f(x, y, tile):
-            if not tile:
-                cells.append(Index(y, x))
-
-        self.each_cell(f)
+        for y, row in enumerate(self.cells):
+            for x, tile in enumerate(row):
+                if not tile:
+                    cells.append(Index(y, x))
         return cells
-
-    def each_cell(self, f):
-        for x in xrange(4):
-            row = self.cells[x]
-            for y in xrange(4):
-                f(x, y, row[y])
 
     def cell_at(self, cell):
         return self.cells[cell.y][cell.x] if cell.within_bounds() else None
@@ -79,12 +67,10 @@ class NumbersState2(ProblemState):
 
     def clone(self):
         new_state = NumbersState2()
-
-        def f(x, y, tile):
-            if tile:
-                new_state.insert_tile(tile.clone())
-
-        self.each_cell(f)
+        for row in self.cells:
+            for tile in row:
+                if tile:
+                    new_state.insert_tile(tile.clone())
         return new_state
 
     def mutate(self):
@@ -97,13 +83,23 @@ class NumbersState2(ProblemState):
         new_state.insert_tile(tile)
         return new_state
 
-    def prepare_tiles(self):
-        def f(x, y, tile):
-            if tile:
-                tile.merged_from = None
-                tile.save_position()
+    def get_mutations(self):
+        empty = self.available_cells()
+        mutations = []
+        for p in empty:
+            new_state = self.clone()
+            new_state.insert_tile(Tile(p.y, p.x, 2))
+            mutations.append((new_state, 0.9 / len(empty)))
+            new_state = self.clone()
+            new_state.insert_tile(Tile(p.y, p.x, 4))
+            mutations.append((new_state, 0.1 / len(empty)))
+        return mutations
 
-        self.each_cell(f)
+    def prepare_tiles(self):
+        for row in self.cells:
+            for tile in row:
+                if tile:
+                    tile.merged_from = None
 
     def move_tile(self, tile, cell):
         self.cells[tile.y][tile.x] = None
