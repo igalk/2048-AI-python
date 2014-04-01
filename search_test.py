@@ -5,7 +5,7 @@ from heuristic.basic import BasicHeuristic
 
 
 class SearchTest(unittest.TestCase):
-    def test_merge_adjacent_cells2(self):
+    def test_merge_adjacent_cells(self):
         state = NumbersState.from_table(
             [[2, 8, 32, 2],
              [0, 16, 64, 8],
