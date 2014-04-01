@@ -27,6 +27,18 @@ class HeuristicTest(unittest.TestCase):
         h = BasicHeuristic()
         self.assertGreater(h.evaluate(successors[UP]), h.evaluate(successors[DOWN]))
 
+    def test_merge_adjacent_cells3(self):
+        state = NumbersState.from_table(
+            [[16, 4, 8, 32],
+             [4, 512, 16, 128],
+             [32, 8, 32, 2],
+             [2, 4, 4, 2]])
+
+        successors = state.get_successors()
+        h = BasicHeuristic()
+        self.assertEqual(h.evaluate(successors[LEFT]), h.evaluate(successors[RIGHT]))
+        self.assertGreater(h.evaluate(successors[DOWN]), h.evaluate(successors[UP]))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -17,9 +17,9 @@ class BasicHeuristic(Heuristic):
                     empty += 1
 
                 # Boost if has equal adjacent cells
-                if x > 0 and cell == state.cell_at((x-1, y)):
+                if x > 0 and cell == state.cell_at((y, x-1)):
                     adjacent += 1
-                if y > 0 and cell == state.cell_at((x, y-1)):
+                if y > 0 and cell == state.cell_at((y-1, x)):
                     adjacent += 1
 
         return cell_score + empty*32 + adjacent + max(snakes)
