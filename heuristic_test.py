@@ -39,6 +39,17 @@ class HeuristicTest(unittest.TestCase):
         self.assertEqual(h.evaluate(successors[LEFT]), h.evaluate(successors[RIGHT]))
         self.assertGreater(h.evaluate(successors[DOWN]), h.evaluate(successors[UP]))
 
+    def test_snake_with_empty_space(self):
+        state = NumbersState.from_table(
+            [[4, 32, 4, 0],
+             [2, 4, 4, 4],
+             [4, 64, 32, 128],
+             [0, 0, 0, 0]])
+
+        successors = state.get_successors()
+        h = BasicHeuristic()
+        self.assertGreater(h.evaluate(successors[RIGHT]), h.evaluate(successors[DOWN]))
+
 
 if __name__ == "__main__":
     unittest.main()
