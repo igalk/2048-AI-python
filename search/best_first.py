@@ -25,10 +25,19 @@ class State:
         mutations = self.state.get_mutations()
         states = []
         for mutation, chance in mutations:
+            # print '*'*20
+            # print 'Mutation: '
+            # print mutation
+            # print chance
+
             best = {'score': -1, 'successor': None, 'chance': 0}
             successors = mutation.get_successors()
             for successor in successors.itervalues():
                 score = heuristic.evaluate(successor)
+                # print '*'*10
+                # print 'Successor: '
+                # print successor
+                # print score
                 if score > best['score']:
                     best['score'] = score
                     best['successor'] = successor
@@ -78,11 +87,24 @@ class BestFirstGraphSearch(SearchAlgorithm):
             scores[direction] = score
             states.append(State(new_state, score, direction, 1.0))
 
+        # print scores
+        # for s in states:
+        #     print s.state
+        #     print s.score
+        #     print s.orig_direction
+        #     print s.chance
         best_move = {'score': -1, 'direction': -1}
         moves = 0
-        while (time.time() - start) < self.time_limit:
+        while (time.time() - start) < self.time_limit and len(states):
             # Find the current best state
-            best_index, best_state = max(enumerate(states), key=lambda state: state[1].score)
+            best_index, best_state = max(enumerate(states), key=lambda state: state[1].score * state[1].chance)  # Maybe multiply by the chance?
+
+            # print '*'*40
+            # print 'Chose best state:'
+            # print best_state.state
+            # print best_state.score
+            # print best_state.orig_direction
+            # print best_state.chance
 
             # Replace the best state with all its children
             states.pop(best_index)
@@ -92,6 +114,21 @@ class BestFirstGraphSearch(SearchAlgorithm):
             for child in children:
                 score += (child.score * child.chance)
                 states.append(child)
+
+            # print '*'*10
+            # print 'New children:'
+            # for s in children:
+            #     print s.state
+            #     print s.score
+            #     print s.orig_direction
+            #     print s.chance
+            # print '*'*40
+            # print 'New state list:'
+            # for s in states:
+            #     print s.state
+            #     print s.score
+            #     print s.orig_direction
+            #     print s.chance
 
             scores[best_state.orig_direction] = score
             if score > best_move['score']:
