@@ -6,7 +6,7 @@ from direction import *
 
 
 BOARD_SIZE = 4  # cells
-CELL_SIZE = 12  # bits
+CELL_SIZE = 13  # bits
 GOAL = (1 << (CELL_SIZE - 1))
 ALL_ONES = ((GOAL << 1) - 1)
 
