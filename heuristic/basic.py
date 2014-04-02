@@ -1,3 +1,4 @@
+import math
 from search.algorithm import Heuristic
 
 
@@ -22,12 +23,51 @@ class BasicHeuristic(Heuristic):
                     empty += 1
                 snakes.append(BasicHeuristic.snake_rec(x, y, cell, state))
 
+        monotonic_up = 0
+        monotonic_down = 0
+        monotonic_left = 0
+        monotonic_right = 0
+        for x in xrange(4):
+            current = 0
+            next = current + 1
+            while next < 4:
+                while next < 3 and not state.cell_at((next, x)):
+                    next += 1
+                current_cell = state.cell_at((current, x))
+                current_value = math.log(current_cell, 2) if current_cell else 0
+                next_cell = state.cell_at((next, x))
+                next_value = math.log(next_cell, 2) if next_cell else 0
+                if current_value > next_value:
+                    monotonic_up += (next_value - current_value)
+                elif next_value > current_value:
+                    monotonic_down += (current_value - next_value)
+                current = next
+                next += 1
+        for y in xrange(4):
+            current = 0
+            next = current + 1
+            while next < 4:
+                while next < 3 and not state.cell_at((y, next)):
+                    next += 1
+                current_cell = state.cell_at((y, current))
+                current_value = math.log(current_cell, 2) if current_cell else 0
+                next_cell = state.cell_at((y, next))
+                next_value = math.log(next_cell, 2) if next_cell else 0
+                if current_value > next_value:
+                    monotonic_left += (next_value - current_value)
+                elif next_value > current_value:
+                    monotonic_right += (current_value - next_value)
+                current = next
+                next += 1
+        monotonic = max(monotonic_up, monotonic_down) + max(monotonic_left, monotonic_right)
+
         # print "cell_score: %d" % cell_score
         # print "empty: %d" % empty
         # print "adjacent: %d" % adjacent
         # print "snakes: %s" % snakes
+        # print "monotonic: %d" % monotonic
 
-        return cell_score + empty*32 + adjacent + max(snakes)
+        return cell_score + empty*32 + adjacent*4 + max(snakes)*9 + monotonic
 
     @staticmethod
     def snake_rec(x, y, tile, state):
